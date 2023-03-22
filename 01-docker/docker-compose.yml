@@ -62,6 +62,40 @@ services:
       timeout: 5s
       retries: 120
 
+  setupmb:
+    depends_on:
+      es01:
+        condition: service_healthy
+      es02:
+        condition: service_healthy
+      es03:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+
+    image: docker.elastic.co/beats/metricbeat:${STACK_VERSION}
+    volumes:
+      - certs:/usr/share/metricbeat/config/certs
+      - ./metricbeat.docker.yml:/usr/share/metricbeat/metricbeat.yml
+    user: "0"
+    command: >
+      bash -c '
+      chown root:root /usr/share/metricbeat/metricbeat.yml;
+      metricbeat setup -E setup.kibana.host="http://kibana:5601" \
+               -E output.elasticsearch.hosts=["https://es01:9200"] \
+               -E output.elasticsearch.ssl.certificate_authorities=/usr/share/metricbeat/config/certs/ca/ca.crt \
+               -E output.elasticsearch.ssl.certificate=/usr/share/metricbeat/config/certs/es01/es01.crt \
+               -E output.elasticsearch.ssl.key=/usr/share/metricbeat/config/certs/es01/es01.key \
+               -E output.elasticsearch.password=elastic \
+               -E output.elasticsearch.username=elastic \
+               -E setup.ilm.overwrite=true
+      '
+    healthcheck:
+      test: ["CMD-SHELL", "[ -f config/certs/es01/es01.crt ]"]
+      interval: 1s
+      timeout: 5s
+      retries: 120
+
   es01:
     depends_on:
       setup:
@@ -209,6 +243,39 @@ services:
         [
           "CMD-SHELL",
           "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 302 Found'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+
+  metricbeat:
+    depends_on:
+      es01:
+        condition: service_healthy
+      es02:
+        condition: service_healthy
+      es03:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+      setupmb:
+        condition: service_healthy
+    image: docker.elastic.co/beats/metricbeat:${STACK_VERSION}
+    volumes:
+      - certs:/usr/share/metricbeat/config/certs
+      - ./metricbeat.docker.yml:/usr/share/metricbeat/metricbeat.yml
+    environment:
+      - SERVERNAME=metricbeat
+      - ELASTICSEARCH_HOSTS=https://es01:9200
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
+      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/metricbeat/config/certs/ca/ca.crt
+    mem_limit: ${MEM_LIMIT}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s -I http://kibana:5601 | grep -q 'HTTP/1.1 302 Found'",
         ]
       interval: 10s
       timeout: 10s

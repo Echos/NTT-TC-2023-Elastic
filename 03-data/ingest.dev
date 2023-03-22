@@ -1,0 +1,370 @@
+PUT _ingest/pipeline/sample
+{
+  "description": "Ingest pipeline created by text structure finder",
+    "processors": [
+      {
+        "csv": {
+          "field": "message",
+          "target_fields": [
+            "srcip",
+            "sport",
+            "dstip",
+            "dsport",
+            "proto",
+            "state",
+            "dur",
+            "sbytes",
+            "dbytes",
+            "sttl",
+            "dttl",
+            "sloss",
+            "dloss",
+            "service",
+            "Sload",
+            "Dload",
+            "Spkts",
+            "Dpkts",
+            "swin",
+            "dwin",
+            "stcpb",
+            "dtcpb",
+            "smeansz",
+            "dmeansz",
+            "trans_depth",
+            "res_bdy_len",
+            "Sjit",
+            "Djit",
+            "Stime",
+            "Ltime",
+            "Sintpkt",
+            "Dintpkt",
+            "tcprtt",
+            "synack",
+            "ackdat",
+            "is_sm_ips_ports",
+            "ct_state_ttl",
+            "ct_flw_http_mthd",
+            "is_ftp_login",
+            "ct_ftp_cmd",
+            "ct_srv_src",
+            "ct_srv_dst",
+            "ct_dst_ltm",
+            "ct_src_ltm",
+            "ct_src_dport_ltm",
+            "ct_dst_sport_ltm",
+            "ct_dst_src_ltm",
+            "attack_cat",
+            "Label"
+          ],
+          "ignore_missing": false
+        }
+      },
+      {
+        "geoip": {
+          "field": "srcip",
+          "target_field": "src"
+        }
+      },
+      {
+        "geoip": {
+          "field": "dstip",
+          "target_field": "dst"
+        }
+      },
+      {
+        "date": {
+          "field": "Stime",
+          "formats": [
+            "UNIX"
+          ]
+        }
+      },
+      {
+        "convert": {
+          "field": "Dintpkt",
+          "type": "double",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "Djit",
+          "type": "double",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "Dload",
+          "type": "double",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "Dpkts",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "Label",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "Sintpkt",
+          "type": "double",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "Sjit",
+          "type": "double",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "Sload",
+          "type": "double",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "Spkts",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "ackdat",
+          "type": "double",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "ct_dst_ltm",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "ct_dst_sport_ltm",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "ct_dst_src_ltm",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "ct_flw_http_mthd",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "ct_ftp_cmd",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "ct_src_dport_ltm",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "ct_src_ltm",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "ct_srv_dst",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "ct_srv_src",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "ct_state_ttl",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "dbytes",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "dloss",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "dmeansz",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "dtcpb",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "dttl",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "dur",
+          "type": "double",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "dwin",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "is_ftp_login",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "is_sm_ips_ports",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "res_bdy_len",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "sbytes",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "sloss",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "smeansz",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "sport",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "stcpb",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "sttl",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "swin",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "synack",
+          "type": "double",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "tcprtt",
+          "type": "double",
+          "ignore_missing": true
+        }
+      },
+      {
+        "convert": {
+          "field": "trans_depth",
+          "type": "long",
+          "ignore_missing": true
+        }
+      },
+      {
+        "remove": {
+          "field": "message"
+        }
+      }
+    ]
+  }
+}
+

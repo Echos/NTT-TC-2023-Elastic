@@ -1,0 +1,187 @@
+PUT _index_template/sample
+{
+  "index_patterns": ["sample*"],
+  "template": {
+    "settings": {
+      "number_of_shards": 1
+    },
+    "mappings": {
+      "_source": {
+        "enabled": true
+      },
+      "properties": {
+    "@timestamp": {
+      "type": "date"
+    },
+    "Dintpkt": {
+      "type": "double"
+    },
+    "Djit": {
+      "type": "double"
+    },
+    "Dload": {
+      "type": "double"
+    },
+    "Dpkts": {
+      "type": "long"
+    },
+    "Label": {
+      "type": "long"
+    },
+    "Ltime": {
+      "type": "date",
+      "format": "epoch_second"
+    },
+    "Sintpkt": {
+      "type": "double"
+    },
+    "Sjit": {
+      "type": "double"
+    },
+    "Sload": {
+      "type": "double"
+    },
+    "Spkts": {
+      "type": "long"
+    },
+    "Stime": {
+      "type": "date",
+      "format": "epoch_second"
+    },
+    "ackdat": {
+      "type": "double"
+    },
+    "attack_cat": {
+      "type": "keyword"
+    },
+    "ct_dst_ltm": {
+      "type": "long"
+    },
+    "ct_dst_sport_ltm": {
+      "type": "long"
+    },
+    "ct_dst_src_ltm": {
+      "type": "long"
+    },
+    "ct_flw_http_mthd": {
+      "type": "long"
+    },
+    "ct_ftp_cmd": {
+      "type": "long"
+    },
+    "ct_src_dport_ltm": {
+      "type": "long"
+    },
+    "ct_src_ltm": {
+      "type": "long"
+    },
+    "ct_srv_dst": {
+      "type": "long"
+    },
+    "ct_srv_src": {
+      "type": "long"
+    },
+    "ct_state_ttl": {
+      "type": "long"
+    },
+    "dbytes": {
+      "type": "long"
+    },
+    "dloss": {
+      "type": "long"
+    },
+    "dmeansz": {
+      "type": "long"
+    },
+    "dsport": {
+      "type": "keyword"
+    },
+    "dstip": {
+      "type": "ip"
+    },
+    "dtcpb": {
+      "type": "long"
+    },
+    "dttl": {
+      "type": "long"
+    },
+    "dur": {
+      "type": "double"
+    },
+    "dwin": {
+      "type": "long"
+    },
+    "is_ftp_login": {
+      "type": "long"
+    },
+    "is_sm_ips_ports": {
+      "type": "long"
+    },
+    "proto": {
+      "type": "keyword"
+    },
+    "res_bdy_len": {
+      "type": "long"
+    },
+    "sbytes": {
+      "type": "long"
+    },
+    "service": {
+      "type": "keyword"
+    },
+    "sloss": {
+      "type": "long"
+    },
+    "smeansz": {
+      "type": "long"
+    },
+    "sport": {
+      "type": "long"
+    },
+    "srcip": {
+      "type": "ip"
+    },
+    "state": {
+      "type": "keyword"
+    },
+    "stcpb": {
+      "type": "long"
+    },
+    "sttl": {
+      "type": "long"
+    },
+    "swin": {
+      "type": "long"
+    },
+    "synack": {
+      "type": "double"
+    },
+    "tcprtt": {
+      "type": "double"
+    },
+    "trans_depth": {
+      "type": "long"
+    },
+    "dst": {
+      "properties": {
+            "location": {
+              "type": "geo_point"
+            }
+      }
+    },
+    "src": {
+      "properties": {
+            "location": {
+              "type": "geo_point"
+            }
+      }
+    }
+      }
+    },
+    "aliases": {
+      "mydata": { }
+    }
+  },
+  "priority": 500
+}
+

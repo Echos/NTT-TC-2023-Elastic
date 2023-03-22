@@ -1,0 +1,17 @@
+filebeat.inputs:
+- type: log
+  paths:
+  - 'sample.csv'
+
+output.elasticsearch:
+  hosts: ["https://es01:9200"]
+  username: "elastic"
+  password: "elastic"
+  index: "sample"
+  pipeline: "sample"
+  ssl:
+    certificate_authorities: ["/usr/share/filebeat/config/certs/ca/ca.crt"]
+
+setup:
+  template.enabled: false
+  ilm.enabled: false
